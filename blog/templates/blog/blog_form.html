@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{% if form.instance.pk %}Edit Blog{% else %}Create Blog{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">{% if form.instance.pk %}Update{% else %}Create{% endif %}</button>
+    <a class="btn btn-primary mt-1 mb-1" href="{% url 'home' %}">back</a>
+</form>
+{% endblock %}

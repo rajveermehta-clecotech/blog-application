@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <article class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">{{ blog.title }}</h1>
+            <p class="text-muted">By {{ blog.author }} on {{ blog.created_at|date:"F d, Y" }}</p>
+            <p class="card-text">{{ blog.content }}</p>
+            {% if blog.author == user %}
+                <a href="{% url 'update_blog' blog.id %}" class="btn btn-sm btn-warning">Update</a>
+                <a href="{% url 'delete_blog' blog.id %}" class="btn btn-sm btn-danger">Delete</a>
+                <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'home' %}">back</a>
+            {% endif %}
+                <!-- <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+                    <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'home' %}">back</a>
+                </div> -->
+        </div>
+    </article>
+{% endblock content %}
