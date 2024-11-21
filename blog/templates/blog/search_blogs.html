@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    {% if blogs %}
+        {% for blog in blogs %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'blog_details' blog.id %}">  {{ blog.title }} </a>
+                        </h5>
+                    <p class="card-text">{{ blog.content|slice:":200" }}...</p>
+                    <small>By {{ blog.author }} on {{ blog.created_at }}</small>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+    <h5>No search result found...</h5>
+    {% endif %}
+</div>
+<a class="btn btn-primary mt-1 mb-1" href="{% url 'home' %}">Back home</a>
+
+{% endblock %}

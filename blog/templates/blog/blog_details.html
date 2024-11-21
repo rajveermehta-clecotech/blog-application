@@ -4,11 +4,21 @@
         <div class="card-body">
             <h1 class="card-title">{{ blog.title }}</h1>
             <p class="text-muted">By {{ blog.author }} on {{ blog.created_at|date:"F d, Y" }}</p>
+            <p>
+                {% if blog.tags.exists %}
+                    {% for tag in blog.tags.all %}
+                    <span class="badge text-bg-secondary">{{ tag.name }}</span>
+                    {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% else %}
+                <span class="badge text-bg-secondary">No tags</span>
+                {% endif %}
+            </p>
             <p class="card-text">{{ blog.content }}</p>
             {% if blog.author == user %}
                 <a href="{% url 'update_blog' blog.id %}" class="btn btn-sm btn-warning">Update</a>
                 <a href="{% url 'delete_blog' blog.id %}" class="btn btn-sm btn-danger">Delete</a>
-                <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'home' %}">back</a>
+                <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'home' %}">Back</a>
             {% endif %}
                 <!-- <div>
                     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">Update</a>
