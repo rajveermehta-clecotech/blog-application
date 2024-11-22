@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import TagSelectView
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -13,4 +15,6 @@ urlpatterns = [
     path('delete/<int:blog_id>/', views.delete_blog, name='delete_blog'),
     path('blog/<int:blog_id>/', views.blog_details, name="blog_details"),
     path('tag/search/', views.tag_search, name='tag_search' ),
+    path('tags/', TagSelectView.as_view(), name='tag-select'),
+
 ]

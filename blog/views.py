@@ -25,6 +25,8 @@ from .models import CustomUser, OTPVerification
 from .forms import UserRegisterForm, OTPVerificationForm
 from .utils import generate_otp, send_otp_email
 from django.contrib.auth import authenticate, login, logout  # Add logout to the import
+from django.http import JsonResponse
+from django.views.generic import TemplateView
 
 
 def signup(request):
@@ -193,7 +195,8 @@ def create_blog(request):
             return redirect('home')
     else:
         form = BlogForm()
-    return render(request, 'blog/blog_form.html', {'form': form})
+        tags = Tag.objects.all()
+    return render(request, 'blog/blog_form.html', {'form': form, 'tags':tags})
 
 @login_required
 def update_blog(request, blog_id):
@@ -229,4 +232,25 @@ def tag_search(request):
                 # Q(content__icontains=search_input)  # Search content for the query
             )
     return render(request, 'blog/search_blogs.html', {"blogs":blogs})
+
+
+class TagSelectView(TemplateView):
+    template_name = 'tag_select.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        tag_name = request.POST.get('tag')
+        if tag_name:
+            tag, created = Tag.objects.get_or_create(
+                name=tag_name.lower().strip()
+            )
+            return JsonResponse({
+                'id': tag.id,
+                'name': tag.name
+            })
+        return JsonResponse({'error': 'Invalid tag'}, status=400)
 
