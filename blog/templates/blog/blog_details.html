@@ -16,7 +16,7 @@
             </p>
             <p class="card-text">{{ blog.content }}</p>
             {% if blog.author == user %}
-                <a href="{% url 'update_blog' blog.id %}" class="btn btn-sm btn-warning">Update</a>
+                <a href="{% url 'update_blog' blog.id %}" class="btn btn-sm btn-warning">Edit</a>
                 <a href="{% url 'delete_blog' blog.id %}" class="btn btn-sm btn-danger">Delete</a>
                 <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'home' %}">Back</a>
             {% endif %}

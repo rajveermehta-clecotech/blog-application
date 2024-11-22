@@ -37,7 +37,7 @@
                         <!-- Tags Field -->
                         <div class="mb-4">
                             <label for="tagSelect" class="form-label">Tags</label>
-                            <select class="form-select" id="tagSelect" multiple="multiple" data-placeholder="Select or create tags">
+                            <select class="form-select" id="tagSelect" multiple="multiple" data-placeholder="Select or create tags" name="tags" >
                                 {% for tag in tags %}
                                 <option value="{{ tag.id }}">{{ tag.name }}</option>
                                 {% endfor %}

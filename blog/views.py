@@ -191,6 +191,13 @@ def create_blog(request):
             blog = form.save(commit=False)
             blog.author = request.user
             blog.save()
+
+            # Process tags
+            tags_input = request.POST.getlist('tags')  # Get tags from the form
+            for tag_name in tags_input:
+                tag, _ = Tag.objects.get_or_create(name=tag_name.strip())  # Create or get the tag
+                blog.tags.add(tag)  # Add the tag to the blog post's tags
+
             form.save_m2m()
             return redirect('home')
     else:
